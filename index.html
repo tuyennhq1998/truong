@@ -156,6 +156,7 @@
             transition: border-color 0.3s, box-shadow 0.3s;
             backdrop-filter: blur(6px);
             -webkit-backdrop-filter: blur(6px);
+            /* Center the active digit vertically via padding on inner */
         }
 
         /* gradient masks — cylinder illusion */
@@ -674,8 +675,11 @@
                     const first = ds.inner.querySelector('.drum-digit');
                     ds.digitH = first ? first.offsetHeight : 100;
                     ds.drumViewH = document.getElementById('drum-' + i).offsetHeight;
-                    ds.inner.style.height = (ds.digitH * 10 * 80) + 'px'; // set explicit height
-                    // random starting position
+                    ds.inner.style.height = (ds.digitH * 10 * 80) + 'px';
+                    // Add top padding so digit[0] sits centered in viewport
+                    const topPad = (ds.drumViewH - ds.digitH) / 2;
+                    ds.inner.style.paddingTop = topPad + 'px';
+                    // random starting position (aligned to digit boundary)
                     ds.offset = Math.floor(Math.random() * 10) * ds.digitH + ds.digitH * 10 * 10;
                     ds.inner.style.transform = `translateY(-${ds.offset}px)`;
                 });
@@ -703,12 +707,10 @@
             const drum = document.getElementById('drum-' + idx);
             const cycleH = ds.digitH * 10;
 
-            // current scroll within a 10-digit cycle
-            // centerOff: how much to shift so the digit center aligns with viewport center
-            const centerOff = (ds.drumViewH - ds.digitH) / 2;
+            // Center digit in viewport: inner starts with top padding
+            // so digit[0] sits centered. No offset math needed.
             let cur = ds.offset % cycleH;
-            let tgt = targetDigit * ds.digitH - centerOff;
-            if (tgt < 0) tgt += cycleH;
+            let tgt = targetDigit * ds.digitH;
             tgt = ((tgt % cycleH) + cycleH) % cycleH;
             let travel = tgt - cur;
             if (travel < ds.digitH * 2) travel += cycleH; // ensure at least 2 digit scroll forward
@@ -731,10 +733,10 @@
                     ds.offset = endOff;
                     ds.inner.style.transform = `translateY(-${ds.offset}px)`;
                     drum.className = 'drum stopped';
-                    // light up center digit
+                    // light up the target digit directly
                     const all = ds.inner.querySelectorAll('.drum-digit');
                     all.forEach(d => d.classList.remove('lit'));
-                    const absIdx = Math.round(ds.offset / ds.digitH);
+                    const absIdx = Math.round(endOff / ds.digitH);
                     if (all[absIdx]) all[absIdx].classList.add('lit');
                     if (onDone) onDone();
                 }
