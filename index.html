@@ -45,7 +45,6 @@
         .slide {
             position: absolute;
             inset: 0;
-            /* background-size: cover; */
             background-position: center;
             opacity: 0;
             transition: opacity 1.8s ease;
@@ -97,16 +96,11 @@
 
         /* MACHINE FRAME */
         #machine {
-            /* background: linear-gradient(160deg, rgba(255, 220, 240, 0.22), rgba(255, 255, 255, 0.15)); */
-            /* border: 2px solid rgba(255, 255, 255, 0.45); */
             border-radius: 40px;
             padding: 72px 30px 64px;
-            /* box-shadow: 0 0 60px rgba(244, 114, 182, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.5); */
             display: flex;
             flex-direction: column;
             align-items: center;
-            /* gap: 40px; */
-            /* backdrop-filter: blur(18px) saturate(1.4); */
             -webkit-backdrop-filter: blur(18px) saturate(1.4);
         }
 
@@ -156,7 +150,6 @@
             transition: border-color 0.3s, box-shadow 0.3s;
             backdrop-filter: blur(6px);
             -webkit-backdrop-filter: blur(6px);
-            /* Center the active digit vertically via padding on inner */
         }
 
         /* gradient masks — cylinder illusion */
@@ -251,21 +244,10 @@
         }
 
         @keyframes drumPop {
-            0% {
-                transform: scale(1)
-            }
-
-            40% {
-                transform: scale(1.08)
-            }
-
-            75% {
-                transform: scale(0.96)
-            }
-
-            100% {
-                transform: scale(1)
-            }
+            0% { transform: scale(1) }
+            40% { transform: scale(1.08) }
+            75% { transform: scale(0.96) }
+            100% { transform: scale(1) }
         }
 
         .drum-sep {
@@ -310,9 +292,7 @@
             filter: brightness(1.08);
         }
 
-        #spin-btn:active {
-            transform: scale(0.97);
-        }
+        #spin-btn:active { transform: scale(0.97); }
 
         #spin-btn:disabled {
             filter: brightness(0.5) saturate(0.3);
@@ -339,152 +319,8 @@
         }
 
         @keyframes rFade {
-            from {
-                opacity: 0;
-                transform: translateY(6px)
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0)
-            }
-        }
-
-        /* MODAL */
-        #modal-overlay {
-            position: fixed;
-            inset: 0;
-            z-index: 100;
-            background: rgba(0, 0, 0, 0.82);
-            backdrop-filter: blur(10px);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        #modal {
-            background: linear-gradient(155deg, rgba(16, 6, 38, 0.99), rgba(8, 3, 22, 0.99));
-            border: 1.5px solid rgba(245, 197, 24, 0.32);
-            border-radius: 24px;
-            padding: 44px 50px;
-            text-align: center;
-            color: #fff;
-            min-width: 340px;
-            max-width: 92vw;
-            box-shadow: 0 0 80px rgba(245, 197, 24, 0.1), 0 24px 80px rgba(0, 0, 0, 0.6);
-        }
-
-        .m-icon {
-            font-size: 50px;
-            margin-bottom: 10px;
-            line-height: 1;
-        }
-
-        #modal h2 {
-            font-family: 'Orbitron', monospace;
-            font-size: 22px;
-            font-weight: 900;
-            color: var(--gold);
-            letter-spacing: 2px;
-            margin-bottom: 8px;
-            text-shadow: 0 0 18px rgba(245, 197, 24, 0.6);
-        }
-
-        #modal p {
-            font-family: 'Rajdhani', sans-serif;
-            font-size: 15px;
-            color: rgba(255, 255, 255, 0.5);
-            margin-bottom: 22px;
-            line-height: 1.65;
-        }
-
-        .hint-row {
-            display: flex;
-            gap: 8px;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-bottom: 22px;
-        }
-
-        .hint-chip {
-            font-family: 'Rajdhani', sans-serif;
-            font-size: 13px;
-            font-weight: 600;
-            background: rgba(245, 197, 24, 0.07);
-            border: 1px solid rgba(245, 197, 24, 0.22);
-            border-radius: 30px;
-            padding: 5px 15px;
-            color: rgba(245, 197, 24, 0.65);
-            cursor: pointer;
-            transition: all 0.18s;
-        }
-
-        .hint-chip:hover {
-            background: rgba(245, 197, 24, 0.16);
-            color: var(--gold);
-            border-color: rgba(245, 197, 24, 0.55);
-        }
-
-        #limit-input {
-            width: 100%;
-            padding: 15px 18px;
-            font-family: 'Orbitron', monospace;
-            font-size: 26px;
-            text-align: center;
-            font-weight: 900;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1.5px solid rgba(245, 197, 24, 0.38);
-            border-radius: 12px;
-            color: var(--gold);
-            outline: none;
-            margin-bottom: 16px;
-            transition: border-color 0.2s, box-shadow 0.2s;
-        }
-
-        #limit-input:focus {
-            border-color: rgba(245, 197, 24, 0.85);
-            box-shadow: 0 0 18px rgba(245, 197, 24, 0.22);
-        }
-
-        #limit-input::placeholder {
-            color: rgba(245, 197, 24, 0.2);
-            font-size: 15px;
-            font-weight: 400;
-        }
-
-        #start-btn {
-            width: 100%;
-            padding: 15px;
-            font-family: 'Orbitron', monospace;
-            font-size: 14px;
-            font-weight: 900;
-            letter-spacing: 3px;
-            background: linear-gradient(135deg, #f5c518, #d09810);
-            border: none;
-            border-radius: 12px;
-            color: #09050f;
-            cursor: pointer;
-            transition: opacity 0.2s, transform 0.15s;
-            text-transform: uppercase;
-            box-shadow: 0 6px 24px rgba(245, 197, 24, 0.32);
-        }
-
-        #start-btn:hover {
-            opacity: 0.9;
-            transform: scale(1.02);
-        }
-
-        #start-btn:active {
-            transform: scale(0.98);
-        }
-
-        #merr {
-            font-family: 'Rajdhani', sans-serif;
-            color: #ff7878;
-            font-size: 13px;
-            margin-top: 10px;
-            min-height: 18px;
-            font-weight: 600;
+            from { opacity: 0; transform: translateY(6px) }
+            to { opacity: 1; transform: translateY(0) }
         }
 
         /* RESULT POPUP */
@@ -501,18 +337,11 @@
             animation: rOverlayIn 0.4s ease;
         }
 
-        #result-overlay.show {
-            display: flex;
-        }
+        #result-overlay.show { display: flex; }
 
         @keyframes rOverlayIn {
-            from {
-                opacity: 0
-            }
-
-            to {
-                opacity: 1
-            }
+            from { opacity: 0 }
+            to { opacity: 1 }
         }
 
         #result-popup {
@@ -528,22 +357,11 @@
         }
 
         @keyframes rPopIn {
-            from {
-                opacity: 0;
-                transform: scale(0.7)
-            }
-
-            to {
-                opacity: 1;
-                transform: scale(1)
-            }
+            from { opacity: 0; transform: scale(0.7) }
+            to { opacity: 1; transform: scale(1) }
         }
 
-        #result-popup .rp-icon {
-            font-size: 64px;
-            line-height: 1;
-            margin-bottom: 16px;
-        }
+        #result-popup .rp-icon { font-size: 64px; line-height: 1; margin-bottom: 16px; }
 
         #result-popup .rp-title {
             font-family: 'Great Vibes', cursive;
@@ -579,14 +397,8 @@
             transition: transform 0.15s, filter 0.15s;
         }
 
-        #result-popup .rp-close:hover {
-            transform: scale(1.06);
-            filter: brightness(1.1);
-        }
-
-        #result-popup .rp-close:active {
-            transform: scale(0.96);
-        }
+        #result-popup .rp-close:hover { transform: scale(1.06); filter: brightness(1.1); }
+        #result-popup .rp-close:active { transform: scale(0.96); }
     </style>
 </head>
 
@@ -618,177 +430,210 @@
         </div>
     </div>
 
-
-
     <script>
-        const IMGS = [
-            '1.jpg',
-            '2.jpg',
-            '3.jpg',
-            '4.jpg',
+        const IMGS = ['1.jpg','2.jpg','3.jpg','4.jpg'];
+
+        // Drum 0 = hàng trăm: chỉ 0,1,2 vì max là 299
+        // Drum 1,2 = hàng chục/đơn vị: 0-9
+        const DRUM_CONFIGS = [
+            [0,1,2],
+            [0,1,2,3,4,5,6,7,8,9],
+            [0,1,2,3,4,5,6,7,8,9],
         ];
-        const MAX_NUM = 300;
         const numDigits = 3;
         let isSpinning = false, drums = [];
 
-        // ─── Slideshow
-        (function () {
+        // Slideshow
+        (function(){
             const ss = document.getElementById('slideshow');
-            IMGS.forEach((u, i) => { const d = document.createElement('div'); d.className = 'slide' + (i === 0 ? ' active' : ''); d.style.backgroundImage = `url('${u}')`; ss.appendChild(d); });
-            let c = 0; setInterval(() => { const s = document.querySelectorAll('.slide'); s[c].classList.remove('active'); c = (c + 1) % s.length; s[c].classList.add('active'); }, 5000);
+            IMGS.forEach((u,i)=>{
+                const d = document.createElement('div');
+                d.className = 'slide'+(i===0?' active':'');
+                d.style.backgroundImage = `url('${u}')`;
+                ss.appendChild(d);
+            });
+            let c=0;
+            setInterval(()=>{
+                const s = document.querySelectorAll('.slide');
+                s[c].classList.remove('active');
+                c = (c+1)%s.length;
+                s[c].classList.add('active');
+            }, 5000);
         })();
 
-        function closeResult() {
+        function closeResult(){
             document.getElementById('result-overlay').classList.remove('show');
         }
 
-        // Build drums on load
-        buildDrums();
+        function buildDrums(){
+            const slot = document.getElementById('slots');
+            slot.innerHTML = ''; drums = [];
 
-        // ─── Build Drums
-        function buildDrums() {
-            const c = document.getElementById('slots'); c.innerHTML = ''; drums = [];
-            const REPS = 80; // enough height for long spins
+            DRUM_CONFIGS.forEach((digits, i)=>{
+                if(i > 0){
+                    const sep = document.createElement('div');
+                    sep.className = 'drum-sep'; sep.textContent = '-';
+                    slot.appendChild(sep);
+                }
+                const wrap  = document.createElement('div'); wrap.className = 'drum-wrap';
+                const lbl   = document.createElement('div'); lbl.className = 'drum-lbl';
+                const drum  = document.createElement('div'); drum.className = 'drum'; drum.id = 'drum-'+i;
+                const hl    = document.createElement('div'); hl.className = 'drum-hl';
+                const inner = document.createElement('div'); inner.className = 'drum-inner'; inner.id = 'inner-'+i;
 
-            for (let i = 0; i < numDigits; i++) {
-                if (i > 0) { const sep = document.createElement('div'); sep.className = 'drum-sep'; sep.textContent = '-'; c.appendChild(sep); }
-
-                const wrap = document.createElement('div'); wrap.className = 'drum-wrap';
-                const lbl = document.createElement('div'); lbl.className = 'drum-lbl'; lbl.textContent = '';
-                const drum = document.createElement('div'); drum.className = 'drum'; drum.id = 'drum-' + i;
-                const hl = document.createElement('div'); hl.className = 'drum-hl';
-                const inner = document.createElement('div'); inner.className = 'drum-inner'; inner.id = 'inner-' + i;
-
-                for (let r = 0; r < REPS; r++) for (let d = 0; d < 10; d++) {
-                    const el = document.createElement('div'); el.className = 'drum-digit'; el.textContent = d; inner.appendChild(el);
+                // Lặp 60 lần để có đủ strip chiều dài
+                for(let r=0; r<60; r++){
+                    digits.forEach(d=>{
+                        const el = document.createElement('div');
+                        el.className = 'drum-digit'; el.textContent = d;
+                        inner.appendChild(el);
+                    });
                 }
 
                 drum.appendChild(inner); drum.appendChild(hl);
                 wrap.appendChild(lbl); wrap.appendChild(drum);
-                c.appendChild(wrap);
-                drums.push({ inner, raf: null, offset: 0, speed: 0, stopped: false, digitH: 0, drumViewH: 0 });
-            }
+                slot.appendChild(wrap);
+                drums.push({ inner, raf:null, offset:0, speed:0, stopped:false, digitH:0, drumH:0, digits, shownDigit:null });
+            });
 
-            // measure after paint
-            requestAnimationFrame(() => {
-                drums.forEach((ds, i) => {
+            requestAnimationFrame(()=>{
+                drums.forEach((ds, i)=>{
                     const first = ds.inner.querySelector('.drum-digit');
                     ds.digitH = first ? first.offsetHeight : 100;
-                    ds.drumViewH = document.getElementById('drum-' + i).offsetHeight;
-                    // Shift inner DOWN so digit[0] center = drum viewport center.
-                    // drum-inner is position:absolute, so `top` is not affected by box-sizing.
-                    // With top = centerOff and transform = translateY(-offset):
-                    //   digit[d] center in viewport = centerOff - offset + d*digitH + digitH/2
-                    //   = drumViewH/2 when offset = d*digitH  ✓
-                    const centerOff = (ds.drumViewH - ds.digitH) / 2;
-                    ds.inner.style.top = centerOff + 'px';
-                    // random starting position aligned to digit boundary
-                    ds.offset = Math.floor(Math.random() * 10) * ds.digitH + ds.digitH * 10 * 10;
+                    ds.drumH  = document.getElementById('drum-'+i).offsetHeight;
+
+                    // Đặt height cố định cho tất cả ô để nhất quán
+                    ds.inner.querySelectorAll('.drum-digit').forEach(el=>{
+                        el.style.height = ds.digitH + 'px';
+                    });
+
+                    // DOM spacer căn giữa: digit[n] ở giữa drum khi translateY(-n*digitH)
+                    // Chứng minh:
+                    //   spacer = (drumH - digitH) / 2
+                    //   digit[n].center trong inner = spacer + n*digitH + digitH/2
+                    //   drum.center trong inner khi offset = n*digitH: offset + drumH/2 = n*digitH + drumH/2
+                    //   => center digit[n] = (drumH-digitH)/2 + n*digitH + digitH/2
+                    //                     = drumH/2 - digitH/2 + n*digitH + digitH/2
+                    //                     = drumH/2 + n*digitH
+                    //                     = offset + drumH/2  ✓ (khi offset = n*digitH)
+                    const sp = Math.max(0, Math.round((ds.drumH - ds.digitH) / 2));
+                    const spacer = document.createElement('div');
+                    spacer.style.cssText = `height:${sp}px;flex-shrink:0;`;
+                    ds.inner.insertBefore(spacer, ds.inner.firstChild);
+
+                    // Bắt đầu tại vị trí ngẫu nhiên sâu trong strip
+                    const cl = ds.digits.length;
+                    const startN = 15*cl + Math.floor(Math.random()*cl);
+                    ds.offset = startN * ds.digitH;
                     ds.inner.style.transform = `translateY(-${ds.offset}px)`;
                 });
             });
         }
 
-        // ─── Spin all drums (free running)
-        function runDrum(idx) {
+        // Đợi font Orbitron load xong mới build — đây là root cause của digitH sai
+        document.fonts.ready.then(()=> buildDrums());
+
+        function runDrum(idx){
             const ds = drums[idx];
-            if (ds.stopped) return;
+            if(ds.stopped) return;
             ds.offset += ds.speed;
-            // keep in bounds (wrap mod)
-            const total = ds.digitH * 10 * 80;
-            if (ds.offset > total - ds.digitH * 10 * 5) ds.offset -= ds.digitH * 10 * 40;
+            // Wrap về: trừ đúng bội số của cycleH để không lệch alignment
+            const cycleH = ds.digitH * ds.digits.length;
+            const wrapAt = cycleH * 40;
+            if(ds.offset > wrapAt) ds.offset -= cycleH * 20;
             ds.inner.style.transform = `translateY(-${ds.offset}px)`;
-            ds.raf = requestAnimationFrame(() => runDrum(idx));
+            ds.raf = requestAnimationFrame(()=> runDrum(idx));
         }
 
-        // ─── Ease-out decelerate + snap to digit
-        function stopDrum(idx, targetDigit, onDone) {
+        function stopDrum(idx, targetDigit, onDone){
             const ds = drums[idx];
             cancelAnimationFrame(ds.raf);
             ds.stopped = true;
 
-            const drum = document.getElementById('drum-' + idx);
-            const cycleH = ds.digitH * 10;
+            const drum    = document.getElementById('drum-'+idx);
+            const cl      = ds.digits.length;
+            const digitIdx = ds.digits.indexOf(targetDigit);
 
-            // Center digit in viewport: inner starts with top padding
-            // so digit[0] sits centered. No offset math needed.
-            let cur = ds.offset % cycleH;
-            let tgt = targetDigit * ds.digitH;
-            tgt = ((tgt % cycleH) + cycleH) % cycleH;
-            let travel = tgt - cur;
-            if (travel < ds.digitH * 2) travel += cycleH; // ensure at least 2 digit scroll forward
-            // add drama: 3-5 extra full cycles
-            travel += cycleH * (3 + Math.floor(Math.random() * 3));
+            if(digitIdx < 0){ drum.className='drum stopped'; if(onDone) onDone(); return; }
 
-            const startOff = ds.offset, endOff = ds.offset + travel;
-            const dur = 1000 + Math.random() * 500;
-            const t0 = performance.now();
+            // ===== LOGIC ĐẢM BẢO ĐÚNG =====
+            // 1. Tìm index nguyên gần nhất từ vị trí hiện tại
+            const curN = Math.round(ds.offset / ds.digitH);
+            const curCycle = ((curN % cl) + cl) % cl;
 
-            function easeOutQuint(x) { return 1 - Math.pow(1 - x, 5); }
+            // 2. Tính bước tiến đến digitIdx (luôn đi tới)
+            const fwd = ((digitIdx - curCycle) + cl) % cl;
 
-            function tick(now) {
+            // 3. targetN: index nguyên, digits[targetN % cl] === targetDigit (chính xác theo toán học)
+            const targetN = curN + (fwd === 0 ? cl : fwd) + cl * (3 + Math.floor(Math.random()*3));
+
+            // 4. endOff = integer * integer = EXACT (không có floating point error)
+            const startOff = ds.offset;
+            const endOff   = targetN * ds.digitH;
+
+            const dur = 1000 + Math.random()*600;
+            const t0  = performance.now();
+            const ease = x => 1 - Math.pow(1-x, 5);
+
+            (function tick(now){
                 const t = Math.min((now - t0) / dur, 1);
-                const e = easeOutQuint(t);
-                ds.offset = startOff + (endOff - startOff) * e;
-                ds.inner.style.transform = `translateY(-${ds.offset}px)`;
-                if (t < 1) { ds.raf = requestAnimationFrame(tick); }
-                else {
-                    ds.offset = endOff;
-                    ds.inner.style.transform = `translateY(-${ds.offset}px)`;
-                    drum.className = 'drum stopped';
-                    // light up the target digit directly
-                    const all = ds.inner.querySelectorAll('.drum-digit');
-                    all.forEach(d => d.classList.remove('lit'));
-                    const absIdx = Math.round(endOff / ds.digitH);
-                    if (all[absIdx]) all[absIdx].classList.add('lit');
-                    if (onDone) onDone();
-                }
-            }
-            ds.raf = requestAnimationFrame(tick);
+                ds.inner.style.transform = `translateY(-${startOff + (endOff - startOff)*ease(t)}px)`;
+                if(t < 1){ ds.raf = requestAnimationFrame(tick); return; }
+
+                // Dừng chính xác
+                ds.offset = endOff;
+                ds.inner.style.transform = `translateY(-${endOff}px)`;
+                drum.className = 'drum stopped';
+
+                // Highlight ô đang hiển thị
+                const all = ds.inner.querySelectorAll('.drum-digit');
+                all.forEach(el=> el.classList.remove('lit'));
+                if(all[targetN]) all[targetN].classList.add('lit');
+
+                // shownDigit = targetDigit (đúng 100% theo toán học vì targetN % cl === digitIdx)
+                ds.shownDigit = targetDigit;
+
+                if(onDone) onDone();
+            })(t0);
         }
 
-        // ─── MAIN SPIN
-        function startSpin() {
-            if (isSpinning) return;
+        function startSpin(){
+            if(isSpinning) return;
             isSpinning = true;
             const btn = document.getElementById('spin-btn');
             btn.disabled = true; btn.textContent = '⏳ ĐANG QUAY...';
             const res = document.getElementById('result');
             res.textContent = ''; res.className = '';
 
-            // Random number 1–300, pad to 3 digits
-            const finalNum = Math.floor(Math.random() * MAX_NUM) + 1;
-            const padded = String(finalNum).padStart(3, '0');
-            const finalDigits = padded.split('').map(Number);
+            // Random 1-299 (drum trái chỉ có digits 0,1,2)
+            const finalNum    = Math.floor(Math.random() * 299) + 1;
+            const finalDigits = String(finalNum).padStart(3, '0').split('').map(Number);
 
-            // Start all spinning
-            drums.forEach((ds, i) => {
-                const drum = document.getElementById('drum-' + i);
-                drum.className = 'drum spinning';
-                ds.stopped = false;
-                ds.speed = 26 + i * 1.5; // slight speed variety
+            drums.forEach((ds, i)=>{
+                document.getElementById('drum-'+i).className = 'drum spinning';
+                ds.stopped = false; ds.shownDigit = null;
+                ds.speed = 18 + i*3;
                 runDrum(i);
             });
 
-            // Stop right → left
-            const BASE = 1500, STEP = 600;
-            for (let i = numDigits - 1; i >= 0; i--) {
-                (function (idx) {
-                    setTimeout(() => {
-                        stopDrum(idx, finalDigits[idx], () => {
-                            if (idx === 0) {
-                                setTimeout(() => {
-                                    isSpinning = false;
-                                    btn.disabled = false; btn.textContent = '▶ QUAY LẠI';
-                                    res.textContent = '🎉  KẾT QUẢ:  ' + String(finalNum).padStart(3, '0');
-                                    res.className = 'show';
-                                    // Show popup
-                                    document.getElementById('rp-number').textContent = String(finalNum).padStart(3, '0');
-                                    document.getElementById('result-overlay').classList.add('show');
-                                }, 350);
-                            }
+            const BASE = 1500, STEP = 700;
+            for(let i = numDigits-1; i >= 0; i--){
+                (function(idx){
+                    setTimeout(()=>{
+                        stopDrum(idx, finalDigits[idx], ()=>{
+                            if(idx !== 0) return;
+                            setTimeout(()=>{
+                                isSpinning = false;
+                                btn.disabled = false; btn.textContent = '▶ QUAY LẠI';
+                                // Đọc từ drum — luôn khớp vì shownDigit = targetDigit by construction
+                                const shown = drums.map(ds=> ds.shownDigit).join('');
+                                res.textContent = '🎉  KẾT QUẢ:  ' + shown;
+                                res.className = 'show';
+                                document.getElementById('rp-number').textContent = shown;
+                                document.getElementById('result-overlay').classList.add('show');
+                            }, 350);
                         });
-                    }, BASE + (numDigits - 1 - idx) * STEP);
+                    }, BASE + (numDigits-1-idx)*STEP);
                 })(i);
             }
         }
