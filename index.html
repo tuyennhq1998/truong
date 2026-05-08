@@ -675,11 +675,14 @@
                     const first = ds.inner.querySelector('.drum-digit');
                     ds.digitH = first ? first.offsetHeight : 100;
                     ds.drumViewH = document.getElementById('drum-' + i).offsetHeight;
-                    ds.inner.style.height = (ds.digitH * 10 * 80) + 'px';
-                    // Add top padding so digit[0] sits centered in viewport
-                    const topPad = (ds.drumViewH - ds.digitH) / 2;
-                    ds.inner.style.paddingTop = topPad + 'px';
-                    // random starting position (aligned to digit boundary)
+                    // Shift inner DOWN so digit[0] center = drum viewport center.
+                    // drum-inner is position:absolute, so `top` is not affected by box-sizing.
+                    // With top = centerOff and transform = translateY(-offset):
+                    //   digit[d] center in viewport = centerOff - offset + d*digitH + digitH/2
+                    //   = drumViewH/2 when offset = d*digitH  ✓
+                    const centerOff = (ds.drumViewH - ds.digitH) / 2;
+                    ds.inner.style.top = centerOff + 'px';
+                    // random starting position aligned to digit boundary
                     ds.offset = Math.floor(Math.random() * 10) * ds.digitH + ds.digitH * 10 * 10;
                     ds.inner.style.transform = `translateY(-${ds.offset}px)`;
                 });
