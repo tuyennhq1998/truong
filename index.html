@@ -665,7 +665,7 @@
                 drum.appendChild(inner); drum.appendChild(hl);
                 wrap.appendChild(lbl); wrap.appendChild(drum);
                 c.appendChild(wrap);
-                drums.push({ inner, raf: null, offset: 0, speed: 0, stopped: false, digitH: 0 });
+                drums.push({ inner, raf: null, offset: 0, speed: 0, stopped: false, digitH: 0, drumViewH: 0 });
             }
 
             // measure after paint
@@ -673,6 +673,7 @@
                 drums.forEach((ds, i) => {
                     const first = ds.inner.querySelector('.drum-digit');
                     ds.digitH = first ? first.offsetHeight : 100;
+                    ds.drumViewH = document.getElementById('drum-' + i).offsetHeight;
                     ds.inner.style.height = (ds.digitH * 10 * 80) + 'px'; // set explicit height
                     // random starting position
                     ds.offset = Math.floor(Math.random() * 10) * ds.digitH + ds.digitH * 10 * 10;
@@ -703,8 +704,12 @@
             const cycleH = ds.digitH * 10;
 
             // current scroll within a 10-digit cycle
+            // centerOff: how much to shift so the digit center aligns with viewport center
+            const centerOff = (ds.drumViewH - ds.digitH) / 2;
             let cur = ds.offset % cycleH;
-            let tgt = targetDigit * ds.digitH;
+            let tgt = targetDigit * ds.digitH - centerOff;
+            if (tgt < 0) tgt += cycleH;
+            tgt = ((tgt % cycleH) + cycleH) % cycleH;
             let travel = tgt - cur;
             if (travel < ds.digitH * 2) travel += cycleH; // ensure at least 2 digit scroll forward
             // add drama: 3-5 extra full cycles
