@@ -617,24 +617,7 @@
         </div>
     </div>
 
-    <div id="modal-overlay">
-        <div id="modal">
-            <div class="m-icon">🎯</div>
-            <h2>THIẾT LẬP</h2>
-            <p>Nhập số giới hạn tối đa.<br>Số chữ số = số ô quay.</p>
-            <div class="hint-row">
-                <span class="hint-chip" onclick="sh(9)">9 → 1 ô</span>
-                <span class="hint-chip" onclick="sh(99)">99 → 2 ô</span>
-                <span class="hint-chip" onclick="sh(999)">999 → 3 ô</span>
-                <span class="hint-chip" onclick="sh(9999)">9999 → 4 ô</span>
-                <span class="hint-chip" onclick="sh(99999)">99999 → 5 ô</span>
-            </div>
-            <input id="limit-input" type="number" placeholder="Nhập số..." min="1" max="99999999" autofocus
-                onkeydown="if(event.key==='Enter')go()" />
-            <button id="start-btn" onclick="go()">✓ XÁC NHẬN &amp; BẮT ĐẦU</button>
-            <div id="merr"></div>
-        </div>
-    </div>
+
 
     <script>
         const IMGS = [
@@ -643,7 +626,9 @@
             '3.jpg',
             '4.jpg',
         ];
-        let numDigits = 3, isSpinning = false, drums = [];
+        const MAX_NUM = 300;
+        const numDigits = 3;
+        let isSpinning = false, drums = [];
 
         // ─── Slideshow
         (function () {
@@ -656,16 +641,8 @@
             document.getElementById('result-overlay').classList.remove('show');
         }
 
-        function sh(v) { document.getElementById('limit-input').value = v; document.getElementById('merr').textContent = ''; }
-
-        function go() {
-            const v = parseInt(document.getElementById('limit-input').value), e = document.getElementById('merr');
-            if (!v || isNaN(v) || v < 1) { e.textContent = '⚠ Nhập số nguyên dương hợp lệ.'; return; }
-            if (v > 99999999) { e.textContent = '⚠ Tối đa 8 chữ số.'; return; }
-            numDigits = v.toString().length;
-            document.getElementById('modal-overlay').style.display = 'none';
-            buildDrums();
-        }
+        // Build drums on load
+        buildDrums();
 
         // ─── Build Drums
         function buildDrums() {
@@ -769,7 +746,10 @@
             const res = document.getElementById('result');
             res.textContent = ''; res.className = '';
 
-            const finalDigits = drums.map(() => Math.floor(Math.random() * 10));
+            // Random number 1–300, pad to 3 digits
+            const finalNum = Math.floor(Math.random() * MAX_NUM) + 1;
+            const padded = String(finalNum).padStart(3, '0');
+            const finalDigits = padded.split('').map(Number);
 
             // Start all spinning
             drums.forEach((ds, i) => {
@@ -790,10 +770,10 @@
                                 setTimeout(() => {
                                     isSpinning = false;
                                     btn.disabled = false; btn.textContent = '▶ QUAY LẠI';
-                                    res.textContent = '🎉  KẾT QUẢ:  ' + finalDigits.join(' - ');
+                                    res.textContent = '🎉  KẾT QUẢ:  ' + String(finalNum).padStart(3, '0');
                                     res.className = 'show';
                                     // Show popup
-                                    document.getElementById('rp-number').textContent = finalDigits.join('   ');
+                                    document.getElementById('rp-number').textContent = String(finalNum).padStart(3, '0');
                                     document.getElementById('result-overlay').classList.add('show');
                                 }, 350);
                             }
