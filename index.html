@@ -443,6 +443,11 @@
         const numDigits = 3;
         let isSpinning = false, drums = [];
 
+        // *** Biến đếm số lần quay — lần thứ 3 luôn ra 105 ***
+        let spinCount = 0;
+        const FORCED_SPIN = 3;
+        const FORCED_NUMBER = 105;
+
         // Slideshow
         (function(){
             const ss = document.getElementById('slideshow');
@@ -481,7 +486,6 @@
                 const hl    = document.createElement('div'); hl.className = 'drum-hl';
                 const inner = document.createElement('div'); inner.className = 'drum-inner'; inner.id = 'inner-'+i;
 
-                // Lặp 60 lần để có đủ strip chiều dài
                 for(let r=0; r<60; r++){
                     digits.forEach(d=>{
                         const el = document.createElement('div');
@@ -502,26 +506,15 @@
                     ds.digitH = first ? first.offsetHeight : 100;
                     ds.drumH  = document.getElementById('drum-'+i).offsetHeight;
 
-                    // Đặt height cố định cho tất cả ô để nhất quán
                     ds.inner.querySelectorAll('.drum-digit').forEach(el=>{
                         el.style.height = ds.digitH + 'px';
                     });
 
-                    // DOM spacer căn giữa: digit[n] ở giữa drum khi translateY(-n*digitH)
-                    // Chứng minh:
-                    //   spacer = (drumH - digitH) / 2
-                    //   digit[n].center trong inner = spacer + n*digitH + digitH/2
-                    //   drum.center trong inner khi offset = n*digitH: offset + drumH/2 = n*digitH + drumH/2
-                    //   => center digit[n] = (drumH-digitH)/2 + n*digitH + digitH/2
-                    //                     = drumH/2 - digitH/2 + n*digitH + digitH/2
-                    //                     = drumH/2 + n*digitH
-                    //                     = offset + drumH/2  ✓ (khi offset = n*digitH)
                     const sp = Math.max(0, Math.round((ds.drumH - ds.digitH) / 2));
                     const spacer = document.createElement('div');
                     spacer.style.cssText = `height:${sp}px;flex-shrink:0;`;
                     ds.inner.insertBefore(spacer, ds.inner.firstChild);
 
-                    // Bắt đầu tại vị trí ngẫu nhiên sâu trong strip
                     const cl = ds.digits.length;
                     const startN = 15*cl + Math.floor(Math.random()*cl);
                     ds.offset = startN * ds.digitH;
@@ -530,14 +523,12 @@
             });
         }
 
-        // Đợi font Orbitron load xong mới build — đây là root cause của digitH sai
         document.fonts.ready.then(()=> buildDrums());
 
         function runDrum(idx){
             const ds = drums[idx];
             if(ds.stopped) return;
             ds.offset += ds.speed;
-            // Wrap về: trừ đúng bội số của cycleH để không lệch alignment
             const cycleH = ds.digitH * ds.digits.length;
             const wrapAt = cycleH * 40;
             if(ds.offset > wrapAt) ds.offset -= cycleH * 20;
@@ -556,18 +547,13 @@
 
             if(digitIdx < 0){ drum.className='drum stopped'; if(onDone) onDone(); return; }
 
-            // ===== LOGIC ĐẢM BẢO ĐÚNG =====
-            // 1. Tìm index nguyên gần nhất từ vị trí hiện tại
             const curN = Math.round(ds.offset / ds.digitH);
             const curCycle = ((curN % cl) + cl) % cl;
 
-            // 2. Tính bước tiến đến digitIdx (luôn đi tới)
             const fwd = ((digitIdx - curCycle) + cl) % cl;
 
-            // 3. targetN: index nguyên, digits[targetN % cl] === targetDigit (chính xác theo toán học)
             const targetN = curN + (fwd === 0 ? cl : fwd) + cl * (3 + Math.floor(Math.random()*3));
 
-            // 4. endOff = integer * integer = EXACT (không có floating point error)
             const startOff = ds.offset;
             const endOff   = targetN * ds.digitH;
 
@@ -580,17 +566,14 @@
                 ds.inner.style.transform = `translateY(-${startOff + (endOff - startOff)*ease(t)}px)`;
                 if(t < 1){ ds.raf = requestAnimationFrame(tick); return; }
 
-                // Dừng chính xác
                 ds.offset = endOff;
                 ds.inner.style.transform = `translateY(-${endOff}px)`;
                 drum.className = 'drum stopped';
 
-                // Highlight ô đang hiển thị
                 const all = ds.inner.querySelectorAll('.drum-digit');
                 all.forEach(el=> el.classList.remove('lit'));
                 if(all[targetN]) all[targetN].classList.add('lit');
 
-                // shownDigit = targetDigit (đúng 100% theo toán học vì targetN % cl === digitIdx)
                 ds.shownDigit = targetDigit;
 
                 if(onDone) onDone();
@@ -600,13 +583,21 @@
         function startSpin(){
             if(isSpinning) return;
             isSpinning = true;
+            spinCount++;
+
             const btn = document.getElementById('spin-btn');
             btn.disabled = true; btn.textContent = '⏳ ĐANG QUAY...';
             const res = document.getElementById('result');
             res.textContent = ''; res.className = '';
 
-            // Random 1-299 (drum trái chỉ có digits 0,1,2)
-            const finalNum    = Math.floor(Math.random() * 299) + 1;
+            // *** Lần quay thứ 3 → ép ra số 105, còn lại random bình thường ***
+            let finalNum;
+            if(spinCount === FORCED_SPIN){
+                finalNum = FORCED_NUMBER;
+            } else {
+                finalNum = Math.floor(Math.random() * 299) + 1;
+            }
+
             const finalDigits = String(finalNum).padStart(3, '0').split('').map(Number);
 
             drums.forEach((ds, i)=>{
@@ -625,7 +616,6 @@
                             setTimeout(()=>{
                                 isSpinning = false;
                                 btn.disabled = false; btn.textContent = '▶ QUAY LẠI';
-                                // Đọc từ drum — luôn khớp vì shownDigit = targetDigit by construction
                                 const shown = drums.map(ds=> ds.shownDigit).join('');
                                 res.textContent = '🎉  KẾT QUẢ:  ' + shown;
                                 res.className = 'show';
